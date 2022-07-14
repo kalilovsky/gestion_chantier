@@ -36,5 +36,95 @@
             </div>
         </div>
     </div>
+    <div class="detail edit">
+        <div class="recentActivity">
+            <div class="textUp">
+                <div class="texte">
+                    Liste des chantiers
+                </div>
+                <button id="addPointage">
+                    <a href="">Nouveau Pointage</a>
+                </button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nom du chantier</th>
+                        <th>Nom et Prénom de la personnes</th>
+                        <th>Date du Pointages</th>
+                        <th>Durée</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for pointage in pointages %}
+                <tr class="editContent">
+                    <td>{{pointage.chantier.nom}}</td>
+                    <td>{{pointage.utilisateur.nom ~ ' ' ~ pointage.utilisateur.nom}}</td>
+                    <td>{{pointage.date | date('d/m/Y H:i')}}</td>
+                    <td>{{pointage.duree | date('H:i')}}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="editPopup" id="editPopup">
+			<div class="thePopup" id="thePopup">
+				<div class="popUpCloseBtn" id="popUpCloseBtn">&times;</div>
+				<div class="title">
+					<h2>Nouveau Pointage</h2>
+				</div>
+				<div class="body">
+					<form action="" id="editPopupForm">
+						<div class="head user">
+							<div class="leftEdit">
+								<div class="sender">
+                                    <label for="">Chantier :</label>
+									<select name="nomChantier" id="nomChantier">
+										{% for chantier in chantiers %}
+											<option value={{chantier.id}}>{{chantier.nom}}</option>
+										{% endfor %}
+									</select>
+								</div>
+								<div class="email">
+									<label for="">Ouvirer :</label>
+									<select name="nomPrenomOuvrier" id="nomPrenomOuvrier">
+										{% for personne in personnes %}
+											<option value={{personne.id}}>{{personne.prenom ~ ' ' ~ personne.nom}}</option>
+										{% endfor %}
+									</select>
+								</div>
+								<div class="category">
+									<label for="">Matricule :</label>
+									<select name="matriculeOuvrier" id="matriculeOuvrier">
+										{% for personne in personnes %}
+											<option value={{personne.id}}>{{personne.matricule}}</option>
+										{% endfor %}
+									</select>
+								</div>
+								<div class="date">
+									<label for="">Date le :</label>
+									<input type="date">
+								</div>
+								<div class="articleTitle">
+									<label for="">Heure de début :
+									</label>
+									<input id="heureDebut" name="heureDebut" type="time">
+								</div>
+								<div class="articleTitle">
+									<label for="">Heure de fin :
+									</label>
+									<input id="heureFin" name="heureFin" type="time">
+								</div>
+							</div>
+						</div>
+						<div class="editButton">
+							<button name="updateButton" data-url="/admin/setArticle/" id="createPointageButton">Créer le pointage</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
 </div>
+<script src="{{asset('./ressource/script/pointages.js')}}"></script>
 {% endblock %}

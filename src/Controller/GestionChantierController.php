@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\ChantiersRepository;
+use App\Repository\PointagesRepository;
 use App\Repository\UtilisateursRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -45,10 +46,15 @@ class GestionChantierController extends AbstractController
     /**
      * @Route("/pointages", name="pointagesPage")
      */
-    public function pointagesPage(): Response
+    public function pointagesPage(PointagesRepository $pointagesRepo,UtilisateursRepository $utilisateursRepo,ChantiersRepository $chantiersRepo): Response
     {
+        $chantiers = $chantiersRepo->findAll();
+        $utilisateurs = $utilisateursRepo->findAll();
+        $pointages = $pointagesRepo->findAll();
         return $this->render('gestion_chantier/pointages.html.twig', [
-            
+            "pointages" => $pointages,
+            'personnes' => $utilisateurs,
+            'chantiers' => $chantiers
         ]);
     }
 }
