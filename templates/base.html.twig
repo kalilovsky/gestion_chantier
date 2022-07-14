@@ -5,6 +5,7 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         {# Run `composer require symfony/webpack-encore-bundle`
            and uncomment the following Encore helpers to start using Symfony UX #}
+           <link rel="stylesheet" href={{ asset('ressource/styles/styles.css')}}>
         {% block stylesheets %}
             {#{{ encore_entry_link_tags('app') }}#}
         {% endblock %}
@@ -14,6 +15,45 @@
         {% endblock %}
     </head>
     <body>
+        <header>
+			<nav>
+				<ul>
+					<li>
+						<a href="{{ path('home') }}">
+							<span class="icon">
+								<i class="fas fa-home"></i>
+							</span>
+							<span class="titre">accueil</span>
+						</a>
+					</li>
+					<li>
+						<a href="{{ path('chantiersPage') }}">
+							<span class="icon">
+                                <i class="fas fa-snowplow"></i>
+							</span>
+							<span class="titre">Chantiers</span>
+						</a>
+					</li>
+					<li>
+						<a href="{{path('utilisateursPage')}}">
+							<span class="icon">
+								<i class="fas fa-user-friends"></i>
+							</span>
+							<span class="titre">Utilisateurs</span>
+						</a>
+					</li>
+					<li>
+						<a href="{{path('pointagesPage')}}">
+							<span class="icon">
+								<i class="fas fa-user-clock"></i>
+							</span>
+							<span class="titre">Pointages</span>
+						</a>
+					</li>
+				</ul>
+			</nav>
+        </header>
         {% block body %}{% endblock %}
+        <script src="https://kit.fontawesome.com/fca1edefcc.js" crossorigin="anonymous"></script>
     </body>
 </html>

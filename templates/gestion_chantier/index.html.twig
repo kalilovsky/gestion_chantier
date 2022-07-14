@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+<div class="dashboard">
+    <div class="cards">
+        <div class="resume">
+            <a href="{{ path('home') }}"></a>
+            <div class="chiffre">
+                <div class="qt">33</div>
+                <div class="denom">Utilisateurs enregistrés</div>
+            </div>
+            <div class="icon">
+                <i class="fas fa-users"></i>
+            </div>
+        </div>
+        <div class="resume">
+            <a href="{{ path('chantiersPage') }}"></a>
+            <div class="chiffre">
+                <div class="qt">33</div>
+                <div class="denom">Utilisateurs enregistrés</div>
+            </div>
+            <div class="icon">
+                <i class="fas fa-users"></i>
+            </div>
+        </div>
+        <div class="resume">
+            <a href="{{ path('home') }}"></a>
+            <div class="chiffre">
+                <div class="qt">33</div>
+                <div class="denom">Utilisateurs enregistrés</div>
+            </div>
+            <div class="icon">
+                <i class="fas fa-users"></i>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
