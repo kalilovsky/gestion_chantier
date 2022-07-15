@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Chantiers;
 use App\Entity\Pointages;
 use App\Entity\Utilisateurs;
 use App\Utils\DateUtils;
@@ -63,12 +64,16 @@ class PointagesRepository extends ServiceEntityRepository
         return $query->execute();
     }
 
-    public function findUtilisateurByDate(Utilisateurs $utilisateur, DateTimeInterface $date):Array{
+    public function findUtilisateurByDate(Utilisateurs $utilisateur, Chantiers $chantier, DateTimeInterface $date):Array{
         $queryBuilder = $this->createQueryBuilder('p')
                     ->where('p.utilisateur = :utilisateur')
-                    ->andWhere('p.date = :date')
+                    ->andWhere('p.chantier = :chantier')
+                    ->andWhere('p.date >= :dateStart')
+                    ->andWhere('p.date <= :dateEnd')
                     ->setParameter('utilisateur',$utilisateur)
-                    ->setParameter('date',$date->format('Y-m-d'));
+                    ->setParameter('chantier',$chantier)
+                    ->setParameter('dateStart',$date->format('Y-m-d 00:00:00'))
+                    ->setParameter('dateEnd',$date->format('Y-m-d 23:59:59'));
         $query = $queryBuilder->getQuery();
         return $query->execute();
     }

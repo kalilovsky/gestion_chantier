@@ -8,6 +8,7 @@ use App\Entity\Utilisateurs;
 use App\Repository\ChantiersRepository;
 use App\Repository\PointagesRepository;
 use App\Repository\UtilisateursRepository;
+use App\Utils\DateUtils;
 use DateInterval;
 use DateTime;
 use DateTimeInterface;
@@ -26,34 +27,37 @@ class PointagesController extends AbstractController
         $data = $request->request->all();
         $pointage = new Pointages();
         $personne = $utilisateursRepo->find($data['idOuvrier']);
-        $this->checkIfUtilisateurAllowedToPointe($personne,new DateTime($data['datePointage']));
-        $pointage->setUtilisateur($personne);
         $chantier = $chantiersRepo->find($data['idChantier']);
-        $pointage->setChantier($chantier);
-        $pointage->setDuree($data['heureDebut'],$data['heureFin']);
-        $this->checkLimitHoursInWeekPerUser($personne,new DateTime($data['datePointage']),$pointage);
-        $pointage->setDate(new DateTime($data['datePointage']));
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($pointage);
-        $entityManager->flush();
-        return $this->json("test",200);
+        $data['datePointage'] = DateUtils::setStartDate($data['datePointage'],$data['heureDebut']);
+        $data['duree'] = DateUtils::createDateIntervall($data['heureDebut'],$data['heureFin']);
+        $pointage->setDuree($data['duree']);
+        $allowedToPoint = $this->checkIfUtilisateurAllowedToPointe($personne,$chantier,$data['datePointage']);
+        $isLimitNotReached = $this->checkLimitHoursInWeekPerUser($personne,$data['datePointage'],$pointage);
+        if($allowedToPoint && $isLimitNotReached){
+            $pointage->setUtilisateur($personne);
+            $pointage->setChantier($chantier);
+            $pointage->setDate($data['datePointage']);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($pointage);
+            $entityManager->flush();
+            return $this->json(['message'=>'success'],200);
+        }elseif(!$allowedToPoint){
+            return $this->json(['message'=>'L\'ouvrier a déja pointé ce jour, il ne peut donc pointer !'],200);
+        }elseif(!$isLimitNotReached){
+            return $this->json(['message'=>'L\'ouvrier a déja dépassé 35 heures pendant cette semaine !'],200);
+        }
+
     }
-    private function checkIfUtilisateurAllowedToPointe(Utilisateurs $utilisateur,DateTimeInterface $date){
-        $pointagesPerUtilisateur = $this->getDoctrine()->getRepository(Pointages::class)->findUtilisateurByWeek($utilisateur,$date);
-        $p = '';
+    private function checkIfUtilisateurAllowedToPointe(Utilisateurs $utilisateur,Chantiers $chantier,DateTimeInterface $date){
+        $pointagesPerUtilisateur = $this->getDoctrine()->getRepository(Pointages::class)->findUtilisateurByDate($utilisateur,$chantier,$date);
+        if(count($pointagesPerUtilisateur)>0) return false;
+        return true;
     }
     private function checkLimitHoursInWeekPerUser(Utilisateurs $utilisateur,DateTimeInterface $date, Pointages $pointage){
         $pointagesPerUtilisateur = $this->getDoctrine()->getRepository(Pointages::class)->findUtilisateurByWeek($utilisateur,$date);
         $minutes = 0;
         $hours = 0;
-        foreach($pointagesPerUtilisateur as $pointage){
-            $minutes += $pointage->getDuree()->i;
-            if($minutes>=60){
-                $minutes -= 60;
-                $hours++;
-            }
-            $hours += $pointage->getDuree()->h;
-        }
+        DateUtils::sumDateIntervallFromArray($pointagesPerUtilisateur,$minutes,$hours);
         $minutes += $pointage->getDuree()->i;
         if($minutes>=60){
             $minutes -= 60;

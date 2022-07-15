@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\PointagesRepository;
+use DateInterval;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -92,15 +93,9 @@ class Pointages
      * @param String $endTime
      * @return string|self
      */
-    public function setDuree(String $startTime, String $endTime)
+    public function setDuree(DateInterval $duree) : self
     {
-        $start = new DateTime($startTime);
-        $end = new DateTime($endTime);
-        if($end <= $start){
-            return 'Heure de fin inférieur à l\'heure de début !';
-        }
-        $interval = $start->diff($end);
-        $this->duree = $interval;
+        $this->duree = $duree;
         return $this;
     }
 }

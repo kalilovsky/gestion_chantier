@@ -51,11 +51,17 @@ heureDebut.addEventListener('change',(e)=>{
 form.addEventListener('submit',(e)=>{
     e.preventDefault();
     let [hoursDiff , minDiff] = getDurationOfWork();
-    console.log(hoursDiff);
-    console.log(minDiff);
-    if(hoursDiff > 0 && minDiff > 0){
+    if(hoursDiff > 0 || minDiff > 0){
         let formData = new FormData(e.target);
         fetch(e.target.action,{method:'post',body:formData})
+        .then(result=>result.json())
+        .then(data=>{
+            if(data.message == 'success'){
+                Location.reload();
+            }else{
+                document.getElementById('message').innerHTML = data.message;
+            }
+        })
     }else{
         document.getElementById('message').innerHTML = "L'heure de fin est inférieur à l'heure de début !";
     }
@@ -66,6 +72,8 @@ function getDurationOfWork(){
     let end = heureFin.value.split(':');
     let startHour = new Date(0,0,0,start[0],start[1],0)
     let endHour = new Date(0,0,0,end[0],end[1],0)
+    console.log(startHour);
+    console.log(endHour);
     let timeDiff = endHour.getTime() - startHour.getTime()
     let hourDiff = Math.floor(timeDiff/ 1000 / 60 / 60);
     timeDiff -= hourDiff*1000*60*60;

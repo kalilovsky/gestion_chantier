@@ -50,8 +50,8 @@
                 <thead>
                     <tr>
                         <th>Nom du chantier</th>
-                        <th>Nom et Prénom de la personnes</th>
-                        <th>Date du Pointages</th>
+                        <th>Nom et Prénom de l'ouvrier</th>
+                        <th>Date du Pointage</th>
                         <th>Durée</th>
                     </tr>
                 </thead>
@@ -59,9 +59,9 @@
                 {% for pointage in pointages %}
                 <tr class="editContent">
                     <td>{{pointage.chantier.nom}}</td>
-                    <td>{{pointage.utilisateur.nom ~ ' ' ~ pointage.utilisateur.nom}}</td>
+                    <td>{{pointage.utilisateur.prenom ~ ' ' ~ pointage.utilisateur.nom}}</td>
                     <td>{{pointage.date | date('d/m/Y H:i')}}</td>
-                    <td>{{pointage.duree | date('H:i')}}</td>
+                    <td>{{pointage.duree.h ~ ' heure(s) et ' ~ pointage.duree.i ~ ' minute(s).' }}</td>
                 </tr>
                 {% endfor %}
                 </tbody>
