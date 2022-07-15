@@ -75,12 +75,13 @@
 					<h2>Nouveau Pointage</h2>
 				</div>
 				<div class="body">
-					<form action="" id="editPopupForm">
+					<form action={{ path('add_pointage') }} id="editPopupForm">
 						<div class="head user">
 							<div class="leftEdit">
+								<p id="message" style="color: red;"></p>
 								<div class="sender">
                                     <label for="">Chantier :</label>
-									<select name="nomChantier" id="nomChantier">
+									<select name="idChantier" id="nomChantier" required>
 										{% for chantier in chantiers %}
 											<option value={{chantier.id}}>{{chantier.nom}}</option>
 										{% endfor %}
@@ -88,7 +89,7 @@
 								</div>
 								<div class="email">
 									<label for="">Ouvirer :</label>
-									<select name="nomPrenomOuvrier" id="nomPrenomOuvrier">
+									<select name="idOuvrier" id="nomPrenomOuvrier" required>
 										{% for personne in personnes %}
 											<option value={{personne.id}}>{{personne.prenom ~ ' ' ~ personne.nom}}</option>
 										{% endfor %}
@@ -96,7 +97,7 @@
 								</div>
 								<div class="category">
 									<label for="">Matricule :</label>
-									<select name="matriculeOuvrier" id="matriculeOuvrier">
+									<select name="matriculeOuvrier" id="matriculeOuvrier" required>
 										{% for personne in personnes %}
 											<option value={{personne.id}}>{{personne.matricule}}</option>
 										{% endfor %}
@@ -104,17 +105,17 @@
 								</div>
 								<div class="date">
 									<label for="">Date le :</label>
-									<input type="date">
+									<input id="datePointage" name="datePointage" type="date" required>
 								</div>
 								<div class="articleTitle">
 									<label for="">Heure de début :
 									</label>
-									<input id="heureDebut" name="heureDebut" type="time">
+									<input id="heureDebut" name="heureDebut" type="time" disabled required>
 								</div>
 								<div class="articleTitle">
 									<label for="">Heure de fin :
 									</label>
-									<input id="heureFin" name="heureFin" type="time">
+									<input id="heureFin" name="heureFin" type="time" disabled required>
 								</div>
 							</div>
 						</div>

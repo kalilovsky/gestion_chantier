@@ -3,10 +3,14 @@
 namespace App\Repository;
 
 use App\Entity\Pointages;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\OptimisticLockException;
+use App\Entity\Utilisateurs;
+use App\Utils\DateUtils;
+use DateTimeInterface;
 use Doctrine\ORM\ORMException;
+use Doctrine\ORM\OptimisticLockException;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @extends ServiceEntityRepository<Pointages>
@@ -45,6 +49,28 @@ class PointagesRepository extends ServiceEntityRepository
         if ($flush) {
             $this->_em->flush();
         }
+    }
+    public function findUtilisateurByWeek(Utilisateurs $utilisateur, DateTimeInterface $date):Array{
+        $dateInterval = DateUtils::getDateOfWeek($date);
+        $queryBuilder = $this->createQueryBuilder('p')
+                    ->where('p.utilisateur = :utilisateur')
+                    ->andWhere('p.date >= :startDate')
+                    ->andWhere('p.date < :endDate')
+                    ->setParameter('utilisateur',$utilisateur)
+                    ->setParameter('startDate',$dateInterval["firstDayOfTheWeek"])
+                    ->setParameter('endDate' ,$dateInterval["lastDayOfTheWeek"]);
+        $query = $queryBuilder->getQuery();
+        return $query->execute();
+    }
+
+    public function findUtilisateurByDate(Utilisateurs $utilisateur, DateTimeInterface $date):Array{
+        $queryBuilder = $this->createQueryBuilder('p')
+                    ->where('p.utilisateur = :utilisateur')
+                    ->andWhere('p.date = :date')
+                    ->setParameter('utilisateur',$utilisateur)
+                    ->setParameter('date',$date->format('Y-m-d'));
+        $query = $queryBuilder->getQuery();
+        return $query->execute();
     }
 
     // /**
