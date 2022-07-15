@@ -32,7 +32,9 @@
                 <div class="texte">
                     Liste des chantiers
                 </div>
-
+                <button id="addChantier">
+                    <a class="buttonFictif" href={{ path('add_chantier_page') }}>Nouveau Chantier</a>
+                </button>
             </div>
             <table>
                 <thead>
@@ -42,6 +44,8 @@
                         <th>Date de début</th>
                         <th>Nombre d'ouvriers</th>
                         <th>Cumul des pointages</th>
+                        <th>Èditer</th>
+                        <th>Supprimer</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -52,6 +56,8 @@
                     <td>{{chantier.startDate | date('d/m/Y H:i')}}</td>
                     <td>{{chantier.pointages | length}}</td>
                     <td>{{chantier.startDate | date('d/m/Y H:i')}}</td>
+                    <td><a href={{ path('get_chantier', {'id': chantier.id}) }}>Èditer</a> </td>
+                    <td><a class="deleteButton"href={{ path('delete_chantier', {'id': chantier.id}) }}>Supprimer</a></td>
                 </tr>
                 {% endfor %}
                 </tbody>
@@ -59,4 +65,5 @@
         </div>
     </div>
 </div>
+<script src="{{asset('./ressource/script/chantiers.js')}}"></script>
 {% endblock %}

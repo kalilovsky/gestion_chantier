@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout de chantier{% endblock %}
+
+{% block body %}
+<div class="dashboard active">
+    <div class="editPopup visible zindex1" id="editPopup">
+        <div class="thePopup" id="thePopup">
+            <div class="title">
+                <h2>Ajout d'un chantier</h2>
+                <p id="messageTxt" style="color:green"></p>
+            </div>
+            <div class="body">
+                {{form_start(form,{'action':path('update_chantier',{'id':id}),'attr':{'id':'editPopupForm'}})}}
+                    <div class="head user">
+                        <div class="leftEdit">
+                            <div class="category">
+                                {{form_row(form.nom,{'attr':{'class':'idCategory'}, 'label':'Nom du chantier :'})}}
+                            </div>
+                            <div class="articleTitle">
+                                {{form_row(form.adresse,{'label':'Adresse :'})}}
+                            </div>
+                            <div class="smallDesc">
+                                {{form_row(form.startDate,{'label':'Date de début :'})}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="editButton">
+                        <button name="updateButton" id="updateButton">Mise à jour du chantier</button>
+                    </div>
+                {{form_end(form)}}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

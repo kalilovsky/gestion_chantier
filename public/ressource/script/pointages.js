@@ -57,7 +57,7 @@ form.addEventListener('submit',(e)=>{
         .then(result=>result.json())
         .then(data=>{
             if(data.message == 'success'){
-                Location.reload();
+                location.reload();
             }else{
                 document.getElementById('message').innerHTML = data.message;
             }
