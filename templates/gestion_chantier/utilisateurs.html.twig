@@ -43,7 +43,7 @@
                     Liste des personnes
                 </div>
                 <button id="addUtilisateur">
-                    <a class="buttonFictif" href="">Nouvel ouvrier</a>
+                    <a class="buttonFictif" href={{ path('add_utilisateur_page') }}>Nouvel ouvrier</a>
                 </button>
             </div>
             <table>
@@ -52,6 +52,8 @@
                         <th>Nom</th>
                         <th>Prénom</th>
                         <th>Matricule</th>
+                        <th>Èditer</th>
+                        <th>Supprimer</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -60,6 +62,8 @@
                     <td>{{personne.nom}}</td>
                     <td>{{personne.prenom}}</td>
                     <td>{{personne.matricule}}</td>
+                    <td><a href={{ path('get_utilisateur', {'id': personne.id}) }}>Èditer</a> </td>
+                    <td><a class="deleteButton"href={{ path('delete_utilisateur', {'id': personne.id}) }}>Supprimer</a></td>
                 </tr>
                 {% endfor %}
                 </tbody>
@@ -67,4 +71,6 @@
         </div>
     </div>
 </div>
+<script src="{{asset('./ressource/script/utilisateurs.js')}}"></script>
+
 {% endblock %}

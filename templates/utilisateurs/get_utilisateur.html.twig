@@ -1,32 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ajout de chantier{% endblock %}
+{% block title %}Ajout d'ouvrier{% endblock %}
 
 {% block body %}
 <div class="dashboard active">
     <div class="editPopup visible zindex1" id="editPopup">
         <div class="thePopup" id="thePopup">
             <div class="title">
-                <h2>Modification d'un chantier</h2>
+                <h2>Modification d'un ouvrier</h2>
                 <p id="messageTxt" style="color:green"></p>
             </div>
             <div class="body">
-                {{form_start(form,{'action':path('update_chantier',{'id':id}),'attr':{'id':'editPopupForm'}})}}
+                {{form_start(form,{'action':path('update_utilisateur',{'id':id}),'attr':{'id':'editPopupForm'}})}}
                     <div class="head user">
                         <div class="leftEdit">
                             <div class="category">
-                                {{form_row(form.nom,{'attr':{'class':'idCategory'}, 'label':'Nom du chantier :'})}}
+                                {{form_row(form.nom,{'attr':{'class':'idCategory'}, 'label':'Nom de l\'ouvrier :'})}}
                             </div>
                             <div class="articleTitle">
-                                {{form_row(form.adresse,{'label':'Adresse :'})}}
+                                {{form_row(form.prenom,{'label':'Prénom de l\'ouvrier :'})}}
                             </div>
                             <div class="smallDesc">
-                                {{form_row(form.startDate,{'label':'Date de début :'})}}
+                                {{form_row(form.matricule,{'label':'Matricule :'})}}
                             </div>
                         </div>
                     </div>
                     <div class="editButton">
-                        <button name="updateButton" id="updateButton">Mise à jour du chantier</button>
+                        <button name="updateButton" id="updateButton">Mise à jour de l'ouvrier</button>
                     </div>
                 {{form_end(form)}}
             </div>
