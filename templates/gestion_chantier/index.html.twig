@@ -6,9 +6,9 @@
 <div class="dashboard">
     <div class="cards">
         <div class="resume">
-            <a href="{{ path('home') }}"></a>
+            <a href="{{ path('utilisateursPage') }}"></a>
             <div class="chiffre">
-                <div class="qt">33</div>
+                <div class="qt">{{personnes | length}} </div>
                 <div class="denom">Utilisateurs enregistrés</div>
             </div>
             <div class="icon">
@@ -18,21 +18,21 @@
         <div class="resume">
             <a href="{{ path('chantiersPage') }}"></a>
             <div class="chiffre">
-                <div class="qt">33</div>
-                <div class="denom">Utilisateurs enregistrés</div>
+                <div class="qt">{{chantiers | length}} </div>
+                <div class="denom">Chantiers enregistrés</div>
             </div>
             <div class="icon">
-                <i class="fas fa-users"></i>
+                <i class="fas fa-snowplow"></i>
             </div>
         </div>
         <div class="resume">
-            <a href="{{ path('home') }}"></a>
+            <a href="{{ path('pointagesPage') }}"></a>
             <div class="chiffre">
-                <div class="qt">33</div>
-                <div class="denom">Utilisateurs enregistrés</div>
+                <div class="qt"> {{pointages | length}} </div>
+                <div class="denom">Pointages enregistrés</div>
             </div>
             <div class="icon">
-                <i class="fas fa-users"></i>
+                <i class="far fa-clock"></i>
             </div>
         </div>
     </div>

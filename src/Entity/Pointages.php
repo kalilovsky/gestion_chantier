@@ -21,13 +21,13 @@ class Pointages
 
     /**
      * @ORM\ManyToOne(targetEntity=Utilisateurs::class, inversedBy="pointages")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false,onDelete="CASCADE")
      */
     private $utilisateur;
 
     /**
      * @ORM\ManyToOne(targetEntity=Chantiers::class, inversedBy="pointages")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false,onDelete="CASCADE")
      */
     private $chantier;
 

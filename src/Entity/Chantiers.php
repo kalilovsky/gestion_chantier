@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ChantiersRepository;
+use App\Utils\DateUtils;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -36,8 +37,12 @@ class Chantiers
 
     /**
      * @ORM\OneToMany(targetEntity=Pointages::class, mappedBy="chantier")
+     *  
      */
     private $pointages;
+
+    private $minutes = 0;
+    private $hours = 0;
 
     public function __construct()
     {
@@ -113,5 +118,18 @@ class Chantiers
         }
 
         return $this;
+    }
+
+    public function countTimeFromPointages():String{
+        DateUtils::sumDateIntervallFromArray($this->pointages ,$this->minutes,$this->hours);
+        return $this->hours . ' Heures et ' . $this->minutes . ' minutes.';
+    }
+
+    public function numberOfEmployees():int{
+        $allEmployee = [];
+        foreach($this->pointages as $pointage){
+            $allEmployee[$pointage->getUtilisateur()->getId()]=1   ;
+        }
+        return count($allEmployee);
     }
 }

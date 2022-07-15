@@ -8,21 +8,11 @@
         <div class="resume">
             <a href="{{ path('home') }}"></a>
             <div class="chiffre">
-                <div class="qt">22</div>
-                <div class="denom">Utilisateurs dans ce chantier</div>
+                <div class="qt">{{chantiers | length}}</div>
+                <div class="denom">Total des chantiers</div>
             </div>
             <div class="icon">
-                <i class="fas fa-users"></i>
-            </div>
-        </div>
-        <div class="resume">
-            <a href="{{ path('home') }}"></a>
-            <div class="chiffre">
-                <div class="qt">33</div>
-                <div class="denom">Pointages cumulés</div>
-            </div>
-            <div class="icon">
-                <i class="far fa-clock"></i>
+                <i class="fas fa-snowplow"></i>
             </div>
         </div>
     </div>
@@ -54,8 +44,8 @@
                     <td>{{chantier.nom}}</td>
                     <td>{{chantier.adresse}}</td>
                     <td>{{chantier.startDate | date('d/m/Y H:i')}}</td>
-                    <td>{{chantier.pointages | length}}</td>
-                    <td>{{chantier.startDate | date('d/m/Y H:i')}}</td>
+                    <td>{{chantier.numberOfEmployees}}</td>
+                    <td>{{chantier.countTimeFromPointages}}</td>
                     <td><a href={{ path('get_chantier', {'id': chantier.id}) }}>Èditer</a> </td>
                     <td><a class="deleteButton"href={{ path('delete_chantier', {'id': chantier.id}) }}>Supprimer</a></td>
                 </tr>

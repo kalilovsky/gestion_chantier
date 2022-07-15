@@ -14,10 +14,15 @@ class GestionChantierController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index(): Response
+    public function index(PointagesRepository $pointagesRepo,UtilisateursRepository $utilisateursRepo,ChantiersRepository $chantiersRepo): Response
     {
+        $chantiers = $chantiersRepo->findAll();
+        $utilisateurs = $utilisateursRepo->findAll();
+        $pointages = $pointagesRepo->findAll();
         return $this->render('gestion_chantier/index.html.twig', [
-            'controller_name' => 'GestionChantierController',
+            "pointages" => $pointages,
+            'personnes' => $utilisateurs,
+            'chantiers' => $chantiers
         ]);
     }
 

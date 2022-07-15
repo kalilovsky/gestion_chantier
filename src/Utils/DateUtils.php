@@ -35,7 +35,7 @@ class DateUtils{
         return $start->diff($end);
     }
 
-    public static function sumDateIntervallFromArray(Array $array, int &$minutes, int &$hours){
+    public static function sumDateIntervallFromArray($array, int &$minutes, int &$hours){
         foreach($array as $pointage){
             $minutes += $pointage->getDuree()->i;
             if($minutes>=60){
@@ -45,4 +45,5 @@ class DateUtils{
             $hours += $pointage->getDuree()->h;
         }
     }
+    
 }
