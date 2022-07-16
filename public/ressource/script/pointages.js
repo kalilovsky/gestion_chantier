@@ -13,6 +13,7 @@ document.getElementById("addPointage").addEventListener('click',(e)=>{
 document.getElementById('popUpCloseBtn').addEventListener('click',(e)=>{
     popup.classList.toggle("visible");
     form.reset();
+    document.getElementById('message').innerHTML = "";
 })
 
 matriculeSelect.addEventListener('change',(e)=>{
@@ -27,6 +28,7 @@ window.onclick = function (e) {
     if (e.target == document.getElementById("editPopup")) {
         document.getElementById("editPopup").classList.remove("visible");
         form.reset();
+        document.getElementById('message').innerHTML = "";
     }
 }
 
