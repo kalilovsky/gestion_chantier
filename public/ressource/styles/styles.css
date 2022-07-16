@@ -398,3 +398,12 @@ header {
     padding: 5px 10px;
     font-size: medium;
   }
+  
+  .centerLayout{
+    grid-template-areas: "a . b b . c";
+    grid-template-columns: repeat(6, 1fr) !important;
+  }
+  
+  .centeredGrid{
+    grid-area: b;
+  }
