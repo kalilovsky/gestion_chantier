@@ -15,7 +15,7 @@ class ChantierType extends AbstractType
         $builder
             ->add('nom')
             ->add('adresse')
-            ->add('startDate',DateType::class)
+            ->add('startDate',DateType::class,['widget' => 'single_text'])
         ;
     }
 

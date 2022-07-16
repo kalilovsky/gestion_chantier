@@ -27,8 +27,8 @@ class ChantierController extends AbstractController
             return $this->redirectToRoute('chantiersPage');
         }
         return $this->render('chantier/add_chantier.html.twig', [
-            'controller_name' => 'ChantierController',
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'message' => ''
         ]);
     }
 
@@ -46,6 +46,10 @@ class ChantierController extends AbstractController
             $entityManager->flush();
             return $this->redirectToRoute('chantiersPage');
         }
+        return $this->render('chantier/add_chantier.html.twig', [
+            'message' => 'Des données sont non conformes.',
+            'form' => $form->createView()
+        ]);
     }
 
     /**
