@@ -64,7 +64,7 @@ class PointagesController extends AbstractController
             $hours++;
         }
         $hours += $pointage->getDuree()->h;
-        if($hours>35){
+        if($hours>35 || ($hours == 35 && $minutes >=0)){
             return false;
         }
         return true;
